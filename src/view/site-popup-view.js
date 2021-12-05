@@ -78,7 +78,8 @@ const createPopupControlsTemplate = (isWatchlist, isWatched, isFavorite) => {
   );
 };
 
-const createPopupCommentTemplate = (emoji, comments, textComment, author, dueDateComment) => {
+const createPopupCommentTemplate = (comments) => {
+  const {emoji, textComment, author, dueDateComment} = comments;
   const date = dayjs(dueDateComment).format('DD/MM/YYYY');
 
   return `
@@ -100,18 +101,15 @@ const createPopupCommentTemplate = (emoji, comments, textComment, author, dueDat
 };
 
 export const createPopupTemplate = (card) => {
-  const {poster, nameOfMovie, dueRating, description, isWatchlist, isWatched, isFavorite, emoji, comments, textComment, author, dueDateComment, infoTable} = card;
+  const {poster, nameOfMovie, dueRating, description, isWatchlist, isWatched, isFavorite, comments, infoTable} = card;
 
   const posterTemplate = createPopupPosterTemplate(poster);
   const infoHeadTemplate = createPopupInfoHeadTemplate(nameOfMovie, dueRating);
   const infoTableTemplate = createPopupInfoTableTemplate(infoTable);
   const infoDescriptionTemplate = createPopupInfoDescriptionTemplate(description);
   const controlsTemplate = createPopupControlsTemplate(isWatchlist, isWatched, isFavorite);
-  const CommentTemplate = [];
-  for (let i = 0; i < comments; i ++) {
-    CommentTemplate.push(createPopupCommentTemplate(emoji, comments, textComment, author, dueDateComment));
-  }
 
+  const CommentTemplate = comments.map(createPopupCommentTemplate);
 
   return `<form class="film-details__inner" action="" method="get">
   <div class="film-details__top-container">
@@ -135,7 +133,7 @@ export const createPopupTemplate = (card) => {
 
   <div class="film-details__bottom-container">
     <section class="film-details__comments-wrap">
-    <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments}</span></h3>
+    <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
       ${CommentTemplate.join('')}
       <div class="film-details__new-comment">
         <div class="film-details__add-emoji-label"></div>

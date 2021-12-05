@@ -165,6 +165,7 @@ export const generateFilmItem = () => {
   const dueDate = generateDate();
   const dueDurationFilmHour = generateDurationFilmHour();
   const dueDurationFilmMinute = generateDurationFilmMinute();
+
   const infoTable = {
     id: 1,
     director:	'Anthony Mann',
@@ -174,6 +175,20 @@ export const generateFilmItem = () => {
     runtime:	'1h 18m',
     country:	'USA',
     genres:	['Drama', 'Film-Noir', 'Mystery']
+  };
+
+  const generateComments = () => {
+    const MIN_COMMENT_COUNT = 1;
+    const MAX_COMMENT_COUNT = 10;
+    const count = getRandomInteger(MIN_COMMENT_COUNT, MAX_COMMENT_COUNT);
+
+    return new Array(count).fill(null).map(() => ({
+      commentsCount: generateCountComments(),
+      emoji: generateEmoji(),
+      textComment: generateTextComment(),
+      dueDateComment: generateDateComment(),
+      author: generateAuthorComment(),
+    }));
   };
 
   return {
@@ -189,12 +204,6 @@ export const generateFilmItem = () => {
     isWatchlist: Boolean(getRandomInteger(0, 1)),
     isWatched: Boolean(getRandomInteger(0, 1)),
     isFavorite: Boolean(getRandomInteger(0, 1)),
-    comments: [{
-      commentsCount: generateCountComments(),
-      emoji: generateEmoji(),
-      textComment: generateTextComment(),
-      dueDateComment: generateDateComment(),
-      author: generateAuthorComment(),
-    }]
+    comments: generateComments()
   };
 };

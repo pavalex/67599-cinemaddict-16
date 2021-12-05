@@ -18,9 +18,6 @@ export const createSiteCardTemplate = (card) => {
   const watchedClassName = getActiveClass(isWatched);
   const favoriteClassName = getActiveClass(isFavorite);
 
-  console.log(comments);
-
-
   return  `<article class="film-card">
   <a class="film-card__link">
     <h3 class="film-card__title">${nameOfMovie}</h3>
@@ -32,7 +29,7 @@ export const createSiteCardTemplate = (card) => {
     </p>
     <img src="./images/posters/${poster}" alt="" class="film-card__poster">
     <p class="film-card__description">${descriptionCard}</p>
-    <span class="film-card__comments">${comments.commentsCount} comments</span>
+    <span class="film-card__comments">${comments.length} comments</span>
   </a>
   <div class="film-card__controls">
   <button class="film-card__controls-item film-card__controls-item--add-to-watchlist ${watchlistClassName}" type="button">Add to watchlist</button>
