@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import {createElement} from '../render.js';
 
 const createPopupPosterTemplate = (poster) => (
   `<div class="film-details__poster">
@@ -100,7 +101,7 @@ const createPopupCommentTemplate = (comments) => {
   </ul>`;
 };
 
-export const createPopupTemplate = (card) => {
+const createPopupTemplate = (card) => {
   const {poster, nameOfMovie, dueRating, description, isWatchlist, isWatched, isFavorite, comments, infoTable} = card;
 
   const posterTemplate = createPopupPosterTemplate(poster);
@@ -168,3 +169,28 @@ export const createPopupTemplate = (card) => {
   </div>
 </form>`;
 };
+
+export default class PopupView {
+  #element = null;
+  #card = null;
+
+  constructor(card) {
+    this.#card = card;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createPopupTemplate(this.#card);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
