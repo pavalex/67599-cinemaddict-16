@@ -43,6 +43,6 @@ export default class MenuFilterView {
   }
 
   removeElement() {
-    this.#element = null;
+    this.#element.remove();
   }
 }

@@ -5,10 +5,6 @@ export const RenderPosition = {
   AFTEREND: 'afterend'
 };
 
-export const renderTemplate = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
-
 // Описал render-функцию для отрисовки элемента, которая впоследствии станет главной render-функцией
 export const render = (container, element, place) => {
   switch (place) {
@@ -32,5 +28,5 @@ export const createElement = (template) => {
   const newElement = document.createElement('div');
   newElement.innerHTML = template;
 
-  return newElement.firstChild;
+  return newElement.firstElementChild;
 };

@@ -17,9 +17,9 @@ export default class SiteSortView {
   get element() {
     if (!this.#element) {
       this.#element = createElement(this.template);
-
-      return this.#element;
     }
+
+    return this.#element;
   }
 
   get template() {

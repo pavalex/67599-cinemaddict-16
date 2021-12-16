@@ -1,4 +1,6 @@
-export const createMostTemplate = () => (
+import {createElement} from '../render.js';
+
+const createMostTemplate = () => (
   `<section class="films-list films-list--extra">
     <h2 class="films-list__title">Most commented</h2>
 
@@ -45,5 +47,25 @@ export const createMostTemplate = () => (
     </div>
   </section>`
 );
+
+export default class MostTemplateView {
+  #element = null;
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createMostTemplate();
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
 
 
