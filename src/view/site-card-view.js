@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
+import {createElement} from '../render.js';
 
-export const createSiteCardTemplate = (card) => {
+const createSiteCardTemplate = (card) => {
   const {poster, description, nameOfMovie, dueRating, genre, dueDate, dueDurationFilmHour, dueDurationFilmMinute, comments, isWatched, isWatchlist, isFavorite} = card;
 
   let descriptionCard = description;
@@ -38,3 +39,28 @@ export const createSiteCardTemplate = (card) => {
   </div>
 </article>`;
 };
+
+export default class CardView {
+  #element = null;
+  #card = null;
+
+  constructor(card) {
+    this.#card = card;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createSiteCardTemplate(this.#card);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
