@@ -16,7 +16,6 @@ import {generateFilter} from './mock/filter.js';
 
 const TASK_COUNT = 20;
 const TASK_COUNT_PER_STEP = 5;
-const STR_COUNT = 2;
 
 const cards = Array.from({
   length: TASK_COUNT
@@ -50,18 +49,8 @@ const siteFilmsListContainer = siteFilmsElement.querySelector('.films-list__cont
 // Условие: в системе пока нет фильмов или есть фильмы
 if (cards.length === 0 ) {
 
-  const allNavigationItems = Array.from(siteMainElement.querySelectorAll('.main-navigation__item'));
-
-  allNavigationItems.forEach((item) => {
-    item.addEventListener('click', () => {
-      let date = item.textContent;
-      if (item.textContent !== 'All movies') {
-        date = date.substring(0, date.length - STR_COUNT);
-      }
-      const noFilmsViewComponent = new NoFilmsView(date);
-      render(siteFilmsElement, noFilmsViewComponent.element, RenderPosition.BEFOREEND);
-    });
-  });
+  const noFilmsViewComponent = new NoFilmsView(filters);
+  render(siteFilmsElement, noFilmsViewComponent.element, RenderPosition.BEFOREEND);
 
 } else {
   for (let i = 0; i < Math.min(cards.length, TASK_COUNT_PER_STEP); i++) {

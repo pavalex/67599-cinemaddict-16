@@ -1,18 +1,22 @@
 import {createElement} from '../render.js';
+import {typeFilters} from '../const.js';
 
-const createNoFilmsTemplate = (date) => {
+const createNoFilmsTemplate = (filter) => {
+  const {name} = filter;
   let content = '';
 
-  switch (date) {
-    case 'Watchlist':
+  const {WATCHLIST, HYSTORY, FAVORITES} = typeFilters;
+
+  switch (name) {
+    case WATCHLIST:
       content = 'There are no movies to watch now';
       break;
 
-    case 'History':
+    case HYSTORY:
       content = 'There are no watched movies now';
       break;
 
-    case 'Favorites':
+    case FAVORITES:
       content = 'There are no favorite movies now';
       break;
 
@@ -30,10 +34,10 @@ const createNoFilmsTemplate = (date) => {
 
 export default class NoFilmsView {
   #element = null;
-  #date = null;
+  #filters = null;
 
-  constructor(date) {
-    this.#date = date;
+  constructor(filters) {
+    this.#filters = filters;
   }
 
   get element() {
@@ -45,7 +49,7 @@ export default class NoFilmsView {
   }
 
   get template() {
-    return createNoFilmsTemplate(this.#date);
+    return createNoFilmsTemplate(this.#filters);
   }
 
   removeElement() {
