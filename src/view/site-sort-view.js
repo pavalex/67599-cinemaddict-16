@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const createSiteSortTemplate = () => (
   `<ul class="sort">
@@ -11,22 +11,10 @@ const createSiteSortTemplate = () => (
 
 // Описал компонент sort как класс, который уже возвращает готовый элемент, а не шаблон
 // Использую вспомогательную функцию для создания DOM-элемента по шаблону
-export default class SiteSortView {
-  #element = null;
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
+export default class SiteSortView extends AbstractView {
 
   get template() {
     return createSiteSortTemplate();
   }
 
-  removeElement() {
-    this.#element = null;
-  }
 }
