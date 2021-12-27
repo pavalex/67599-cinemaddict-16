@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {getRandomInteger, getRandomPositiveFloat, getShuffle} from '../utils.js';
+import {getRandomInteger, getRandomPositiveFloat, getShuffle} from '../utils/common.js';
 
 // Постеры
 const generatePoster = () => {

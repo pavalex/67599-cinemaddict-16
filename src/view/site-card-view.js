@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {createElement} from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const createSiteCardTemplate = (card) => {
   const {poster, description, nameOfMovie, dueRating, genre, dueDate, dueDurationFilmHour, dueDurationFilmMinute, comments, isWatched, isWatchlist, isFavorite} = card;
@@ -40,27 +40,16 @@ const createSiteCardTemplate = (card) => {
 </article>`;
 };
 
-export default class CardView {
-  #element = null;
+export default class CardView extends AbstractView {
   #card = null;
 
   constructor(card) {
+    super();
     this.#card = card;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template() {
     return createSiteCardTemplate(this.#card);
   }
 
-  removeElement() {
-    this.#element = null;
-  }
 }

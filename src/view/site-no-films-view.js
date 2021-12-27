@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import AbstractView from './abstract-view.js';
 import {typeFilters} from '../const.js';
 
 const createNoFilmsTemplate = (filter) => {
@@ -32,27 +32,15 @@ const createNoFilmsTemplate = (filter) => {
   );
 };
 
-export default class NoFilmsView {
-  #element = null;
+export default class NoFilmsView extends AbstractView {
   #filters = null;
 
   constructor(filters) {
+    super();
     this.#filters = filters;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template() {
     return createNoFilmsTemplate(this.#filters);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }
