@@ -66,9 +66,18 @@ if (cards.length === 0 ) {
   siteFooterElement.after(popupElement);
   const sitePopupElement = document.querySelector('.film-details');
 
-  const popupViewComponent = new PopupView(cards[0]);
+  let popupViewComponent;
+
+  const onClosePopup = () => {
+    popupViewComponent.removeElement();
+    document.querySelector('body').classList.remove('hide-overflow');
+  };
 
   const onClickPopup = () => {
+    popupViewComponent = new PopupView(cards[0]);
+    popupViewComponent.setCloseClickHandler(() => {
+      popupViewComponent.element.addEventListener('click', onClosePopup);
+    });
     render(sitePopupElement, popupViewComponent, RenderPosition.BEFOREEND);
     document.querySelector('body').classList.add('hide-overflow');
   };
@@ -81,16 +90,6 @@ if (cards.length === 0 ) {
     }
   };
 
-  const onClosePopup = () => {
-    popupViewComponent.removeElement();
-    document.querySelector('body').classList.remove('hide-overflow');
-  };
-
-  popupViewComponent.setCloseClickHandler(() => {
-    popupViewComponent.element.addEventListener('click', onClosePopup);
-  });
-
-
   siteFilmsListContainer.addEventListener('click', onClickPopup);
 
   document.addEventListener('keydown', onEscKeyDown);
@@ -100,11 +99,11 @@ if (cards.length === 0 ) {
 if (cards.length > TASK_COUNT_PER_STEP) {
   let renderedTaskCount = TASK_COUNT_PER_STEP;
 
-  render(siteFilmsListElement, new ButtonShowView(), RenderPosition.BEFOREEND);
+  const buttonShowMoreComponent = new ButtonShowView();
 
-  const showMoreButtonElement = siteFilmsElement.querySelector('.films-list__show-more');
+  render(siteFilmsListElement, buttonShowMoreComponent, RenderPosition.BEFOREEND);
 
-  showMoreButtonElement.setClickHandler(() => {
+  buttonShowMoreComponent.setClickHandler(() => {
     cards
       .slice(renderedTaskCount, renderedTaskCount + TASK_COUNT_PER_STEP)
       .forEach((card) => renderCard(siteFilmsListContainer, card));
@@ -112,7 +111,7 @@ if (cards.length > TASK_COUNT_PER_STEP) {
     renderedTaskCount += TASK_COUNT_PER_STEP;
 
     if (renderedTaskCount >= cards.length) {
-      showMoreButtonElement.remove();
+      buttonShowMoreComponent.removeElement();
     }
   });
 
